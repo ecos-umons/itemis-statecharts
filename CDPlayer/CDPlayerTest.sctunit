@@ -1,19 +1,56 @@
 // Example created by Tom Mens, Software Engineering Lab, University of Mons, Belgium, December 2023
 
 testclass CDPlayerTest for statechart CDPlayer {
-	
+		
 	// test the statechart's initial configuration
 	@Test
 	operation testInitialStateConfiguration() {
 		enter
+		assert active(RemoteControl.Off)
 		assert active(CDPlayer.Off)
 	}
-		
+	
+	operation processOnOff() {
+		// raise an event sent to the remote control to turn on the CDPlayer
+		raise RC.onOff
+		// process the event		
+		proceed 1 cycle
+		// and process the event that will be raised implicitly by the RemoteControl
+		proceed  1 cycle	
+	}
+	
+	operation processPlay() {
+		// raise an event sent to the remote control to play a CD
+	    raise RC.play
+		// process the event		
+	    proceed 1 cycle
+		// and process the event that will be raised implicitly by the RemoteControl
+		proceed  1 cycle	
+	}
+	
+	operation processPause() {
+		// raise an event sent to the remote control to pause the CDPlayer
+	    raise RC.pause
+		// process the event		
+	    proceed 1 cycle
+		// and process the event that will be raised implicitly by the RemoteControl
+		proceed  1 cycle	
+	}
+	
+	operation processStop() {
+		// raise an event sent to the remote control to stop playing
+		raise RC.stop
+		// process the event		
+		proceed 1 cycle
+		// and process the event that will be raised implicitly by the RemoteControl
+		proceed 1 cycle
+	}
+	
 	@Test
 	operation testActivatedCDPlayer() {
 		enter
-		raise on // turn on
-		proceed 1 cycle  // process the event
+		processOnOff() // turn on
+		assert active(RemoteControl.On)
 		assert active(CDPlayer.On)
 		assert active(CDPlayer.On.r1.Stop)
 	}
@@ -21,10 +58,9 @@ testclass CDPlayerTest for statechart CDPlayer {
 	@Test
 	operation testDeactivateCDPlayer() {
 		enter
-		raise on // turn on 
-		proceed 1 cycle  // process the event
-		raise off // turn off again
-		proceed 1 cycle  // process the event
+		processOnOff() // turn on 
+		processOnOff() // and turn off again
+		assert active(RemoteControl.Off)
 		assert active(CDPlayer.Off)
 	}
 	
@@ -32,45 +68,35 @@ testclass CDPlayerTest for statechart CDPlayer {
 	@Test
 	operation testPlayPause() {
 	    enter
-		raise on // turn on
-		proceed 1 cycle  // process the event
-		raise play // to start playing 
-		proceed 1 cycle  // process the event
+	    processOnOff()
+	    processPlay()
 		assert active(CDPlayer.On.r1.Play)
-		raise pause // to pause playing 
-		proceed 1 cycle  // process the event
+		processPause()
 		assert active(CDPlayer.On.r1.Pause)
-		raise play // to start playing again
-		proceed 1 cycle  // process the event
+		processPlay()
 		assert active(CDPlayer.On.r1.Play)
+		
 	}
 		
 	@Test
 	operation testPlayStop() {
 	    enter
-		raise on // turn on
-		proceed 1 cycle  // process the event
-		raise play // to start playing 
-		proceed 1 cycle  // process the event
+	    processOnOff()
+		processPlay()
 		assert active(CDPlayer.On.r1.Play)
-		raise stop // to stop playing 
-		proceed 1 cycle  // process the event
+		processStop()
 		assert active(CDPlayer.On.r1.Stop)
 	}
 	
 	@Test
 	operation testPlayPauseStop() {
 	    enter
-		raise on // turn on
-		proceed 1 cycle  // process the event
-		raise play // to start playing 
-		proceed 1 cycle  // process the event
+	    processOnOff()
+	    processPlay()
 		assert active(CDPlayer.On.r1.Play)
-		raise pause // to pause playing 
-		proceed 1 cycle  // process the event
+		processPause()
 		assert active(CDPlayer.On.r1.Pause)
-		raise stop // to stop playing 
-		proceed 1 cycle  // process the event
+		processStop()
 		assert active(CDPlayer.On.r1.Stop)
 	}
 }

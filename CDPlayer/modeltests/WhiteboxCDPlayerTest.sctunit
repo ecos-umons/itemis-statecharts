@@ -1,0 +1,110 @@
+// Example created by Tom Mens, Software Engineering Lab, University of Mons, Belgium, December 2023
+
+testclass WhiteboxCDPlayerTest for statechart CDPlayer {
+	
+	// White-box testing of the correct functioning of the CD Player by calling its events directly
+	// (i.e., without the remote control, by directly calling the events of the CD player)
+	// Since the tests are white box, we can "see" the states, so it makes sense to test in which state we are.
+	// We are not testing variable changes or operations being called, since these are part of the white-box tests.
+	
+			
+	// test the statechart's initial configuration
+	@Test
+	operation testInitialStateConfiguration() {
+		enter // put the state machine in its initial state configuration
+		assert active(CDPlayer.Off)
+	}
+	
+	operation activateCDPlayer() {
+		enter // put the state machine in its initial state configuration
+		raise CD.on // raise an event sent to the remote control (to turn on the CD player)
+		proceed 1 cycle
+	}
+	
+	@Test
+	operation testActivatedCDPlayer() {
+		activateCDPlayer()
+		assert active(CDPlayer.On)
+		assert active(CDPlayer.On.r1.Stop)
+	}
+	
+	@Test
+	operation testDeactivateCDPlayer() {
+		activateCDPlayer()
+		raise CD.off 		// raise an event sent to the remote control (to turn off the CD player)
+		proceed 1 cycle
+		assert active(CDPlayer.Off)
+	}
+	
+	@Test
+	operation testPlay() {
+		activateCDPlayer()
+		assert active(CDPlayer.On)
+		assert active(CDPlayer.On.r1.Stop)
+	    //start playing:
+		raise CD.play
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Play)
+	}
+	
+	@Test
+	operation testPlayPause() {
+	    activateCDPlayer()
+	    //start playing:
+		raise CD.play
+		proceed 1 cycle
+	    //pause CD player:
+		raise CD.pause
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Pause)
+	    //restart playing:
+		raise CD.play
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Play)
+	}
+		
+	@Test
+	operation testPlayStop() {
+	    activateCDPlayer()
+	    //start playing:
+		raise CD.play
+		proceed 1 cycle
+		//stop playing:
+		raise CD.stop
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Stop)
+	}
+	
+	@Test
+	operation testPlayPauseStop() {
+	    activateCDPlayer()
+	    //start playing:
+	    raise CD.play
+		proceed 1 cycle
+	    //pause CD player:
+		raise CD.pause
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Pause)
+	    //stop CD player:
+		raise CD.stop
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Stop)
+	}
+	
+	@Test
+	operation testTimeout() {
+		// set the timeout at a sufficiently small time period (in milliseconds)
+		// so that this test does not take too long to execute
+		timeout = 500
+		activateCDPlayer()
+		raise CD.play
+		proceed 1 cycle
+		raise CD.pause
+		proceed 1 cycle
+		assert active(CDPlayer.On.r1.Pause)
+		// do nothing and wait 1000 milliseconds (1 second)
+		proceed 1 s
+		// assert that the timed transition "after timeout ms" is indeed followed
+		assert active(CDPlayer.Off)
+	}
+}

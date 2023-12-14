@@ -1,0 +1,7 @@
+// Example created by Tom Mens, Software Engineering Lab, University of Mons, Belgium, December 2023
+
+testsuite CDPlayerTestSuite {
+	RemoteControlTest,     // does the RemoteControl region work well, independently of the CDPlayer region?
+	WhiteboxCDPlayerTest,  // does the CDPlayer region work well, independently of the RemoteControl region?
+	BlackboxCDPlayerTest   // to both orthogonal regions work well together?
+}

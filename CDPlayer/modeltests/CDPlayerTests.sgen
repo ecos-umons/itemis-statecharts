@@ -1,0 +1,51 @@
+GeneratorModel for create::sctunit::java {
+
+	const PROJECT : string = "CDPlayer"
+
+	const FOLDER : string = "./"
+
+	test BlackboxCDPlayerTest {
+
+		feature Outlet {
+			targetProject = PROJECT
+			targetFolder = FOLDER
+		}
+		feature Naming {
+    		basePackage = "test"
+		}
+	}
+
+	test CDPlayerTestSuite {
+
+		feature Outlet {
+			targetProject = PROJECT
+			targetFolder = FOLDER
+		}
+		
+		feature Naming {
+    		basePackage = "test"
+		}
+	}
+
+	test RemoteControlTest {
+
+		feature Outlet {
+			targetProject = PROJECT
+			targetFolder = FOLDER
+		}
+		feature Naming {
+    		basePackage = "test"
+		}
+	}
+
+	test WhiteboxCDPlayerTest {
+
+		feature Outlet {
+			targetProject = PROJECT
+			targetFolder = FOLDER
+		}
+		feature Naming {
+    		basePackage = "test"
+		}
+	}
+}

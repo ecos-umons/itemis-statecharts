@@ -12,6 +12,7 @@ Directory `CDPlayer` contains an example of a statechart controller for a CD Pla
 * V0.1: A simple CD Player, triggered through events like on, off, play, pause and stop.
 * V1.0: Addition of a remote controller to control the CD Player. The remote controller is modelled as a separate statechart in a separate orthogonal region. It raises events that are forwared to the CD Player.
 * V2.0: Addition of a boolean variable isPlaying, reduction of the number of events in the remote controller, and use of a unit test suite composed of multiple test cases to separate the tests of the remote controller from the tests of the CD Player itself.
+* V3.0: Addition of an integer variable timeout, change of the CDPlayer statechart to add a history state and a timeout transition, and refactoring of unit test suite to separate black-box tests from white-box tests.
 
 ## Acknowledgements
 

@@ -1,0 +1,109 @@
+// Example created by Tom Mens, Software Engineering Lab, University of Mons, Belgium, December 2023
+
+testclass InternalCDPlayerTest for statechart CDPlayer {
+	
+	// Testing the correct functioning of the CD Player by using only its functionality directly
+	// (i.e., without the remote control, by directly calling the events of the CD player)
+	
+			
+	// test the statechart's initial configuration
+	@Test
+	operation testInitialStateConfiguration() {
+		enter
+		assert active(CDPlayer.Off)
+	}
+	
+	operation activateCDPlayer() {
+		// put the state machine in its initial state configuration
+		enter
+		// raise an event sent to the remote control (to turn on the CD player)
+		raise CD.on
+		proceed 1 cycle
+	}
+	
+	@Test
+	operation testActivatedCDPlayer() {
+		activateCDPlayer()
+		assert called CD.turnOn()
+ 		assert active(CDPlayer.On)
+		assert active(CDPlayer.On.r1.Stop)
+	}
+	
+	@Test
+	operation testDeactivateCDPlayer() {
+		activateCDPlayer()
+		// raise an event sent to the remote control (to turn off the CD player)
+		raise CD.off
+		proceed 1 cycle
+		assert called CD.turnOff()
+		assert active(CDPlayer.Off)
+	}
+	
+	@Test
+	operation testPlay() {
+		activateCDPlayer()
+		assert isPlaying == false
+		assert active(CDPlayer.On)
+		assert active(CDPlayer.On.r1.Stop)
+	    //start playing:
+		raise CD.play
+		proceed 1 cycle
+		assert called CD.playing()
+		assert active(CDPlayer.On.r1.Play)
+		assert isPlaying == true
+	}
+	
+	@Test
+	operation testPlayPause() {
+	    activateCDPlayer()
+	    //start playing:
+		raise CD.play
+		proceed 1 cycle
+	    //pause CD player:
+		raise CD.pause
+		proceed 1 cycle
+		assert called CD.paused()
+		assert active(CDPlayer.On.r1.Pause)
+		assert isPlaying == false
+	    //restart playing:
+		raise CD.play
+		proceed 1 cycle
+		assert called CD.playing()
+		assert active(CDPlayer.On.r1.Play)
+		assert isPlaying == true
+	}
+		
+	@Test
+	operation testPlayStop() {
+	    activateCDPlayer()
+	    //start playing:
+		raise CD.play
+		proceed 1 cycle
+		//stop playing:
+		raise CD.stop
+		proceed 1 cycle
+		assert called CD.stopped()
+		assert active(CDPlayer.On.r1.Stop)
+		assert isPlaying == false
+	}
+	
+	@Test
+	operation testPlayPauseStop() {
+	    activateCDPlayer()
+	    //start playing:
+	    raise CD.play
+		proceed 1 cycle
+	    //pause CD player:
+		raise CD.pause
+		proceed 1 cycle
+		assert called CD.paused()
+		assert active(CDPlayer.On.r1.Pause)
+		assert isPlaying == false
+	    //stop CD player:
+		raise CD.stop
+		proceed 1 cycle
+		assert called CD.stopped()
+		assert active(CDPlayer.On.r1.Stop)
+		assert isPlaying == false
+	}
+}

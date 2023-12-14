@@ -1,0 +1,44 @@
+// Example created by Tom Mens, Software Engineering Lab, University of Mons, Belgium, December 2023
+
+testclass RemoteControlTest for statechart CDPlayer {
+	
+	// only testing the events of the RemoteControl region
+	
+	
+	// test the statechart's initial configuration
+	@Test
+	operation testInitialStateConfiguration() {
+		enter
+		assert active(RemoteControl.Off)
+	}
+	
+	// test the statecharts initial configuration
+	@Test
+	operation testOnOff() {
+		enter
+		raise onOff
+		proceed 1 cycle
+		assert active(RemoteControl.On)
+		raise onOff
+		proceed 1 cycle
+		assert active(RemoteControl.Off)
+	}
+	
+	
+	@Test
+	operation testPlayPause() {
+		enter
+		raise onOff
+		proceed 1 cycle
+		assert active(RemoteControl.On)
+		// raising the event playPause does not change the sate of the remoteControl
+		raise playPause
+		proceed 1 cycle
+		assert active(RemoteControl.On)
+		// raising the event stop does not change the sate of the remoteControl
+		raise stop
+		proceed 1 cycle
+		assert active(RemoteControl.On)
+	}
+		
+}

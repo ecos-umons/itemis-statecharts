@@ -7,6 +7,11 @@ To simulate the statechart in the example, or execute its unit tests, one needs 
 
 Directory `CDPlayer` contains an example of a statechart controller for a CD Player, triggered through events like on, off, play, pause and stop.
 
+### Version history:
+
+* V0.1: A simple CD Player, triggered through events like on, off, play, pause and stop.
+* V1.0: Addition of a remote controller to control the CD Player. The remote controller is modelled as a separate statechart in a separate orthogonal region. It raises events that are forwared to the CD Player.
+
 ## Acknowledgements
 
 Created by Tom Mens, in the context of lectures at the Department of Computer Science at the University of Mons, Belgium.

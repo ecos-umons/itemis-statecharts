@@ -2,6 +2,6 @@
 
 testsuite CDPlayerTestSuite {
 	RemoteControlTest,     // does the RemoteControl region work well, independently of the CDPlayer region?
-	InternalCDPlayerTest,  // does the CDPlayer region work well, independently of the RemoteControl region?
-	ExternalCDPlayerTest   // to both orthogonal regions work well together?
+	WhiteboxCDPlayerTest,  // does the CDPlayer region work well, independently of the RemoteControl region?
+	BlackboxCDPlayerTest   // to both orthogonal regions work well together?
 }

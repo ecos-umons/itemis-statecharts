@@ -1,0 +1,130 @@
+// Example created by Tom Mens, Software Engineering Lab, University of Mons, Belgium, December 2023
+
+testclass BlackboxCDPlayerTest for statechart CDPlayer {
+	
+	// Blackbox testing the correct functioning of the CD Player by using only its remote control functionality
+	// (i.e., by using only events triggered through the remote control).
+	// These tests are black-box, so we are not supposed to "know" what is happening "inside" the CDPlayer statechart.
+	// As a result, we do not test in which exact state we reside, but we only check whether specific operations
+	// (defined in the CD interface) are called, or whether specific variables have changed their value.
+	
+
+	operation processOnOff() {
+		// raise an event sent to the remote control (to turn on or off the CD player)
+	    raise onOff
+	    // process the event
+	    proceed 1 cycle
+		// and process the event that will be raised implicitly by the RemoteControl
+		proceed  1 cycle	
+	}
+		
+	operation processPlayPause() {
+		// raise an event sent to the remote control (to play a CD or to put it in pause when it is already playing)
+	    raise playPause
+	    // process the event
+	    proceed 1 cycle
+		// and process the event that will be raised implicitly by the RemoteControl
+		proceed  1 cycle	
+	}
+		
+	operation processStop() {
+		// raise an event sent to the remote control (to stop the CD player)
+		raise stop
+		proceed 1 cycle
+		proceed 1 cycle
+	}
+	
+	// test the statechart's initial configuration
+	@Test
+	operation testInitialStateConfiguration() {
+		enter
+		assert called CD.turnOff()
+	}
+	
+	operation activateCDPlayer() {
+		// put the state machine in its initial state configuration
+		enter
+		// raise an event sent to the remote control (to turn on the CD player)	
+		processOnOff() 			
+	}
+	
+	@Test
+	operation testActivatedCDPlayer() {
+		activateCDPlayer()
+		assert called CD.turnOn()
+	}
+	
+	@Test
+	operation testDeactivateCDPlayer() {
+		activateCDPlayer()
+		// raise an event sent to the remote control (to turn off the CD player)
+		processOnOff()
+		assert called CD.turnOff()
+	}
+	
+	@Test
+	operation testPlay() {
+		activateCDPlayer()
+		assert isPlaying == false
+	    //start playing:
+		processPlayPause()
+		assert called CD.playing()
+		assert isPlaying == true
+	}
+	
+	@Test
+	operation testPlayPause() {
+	    activateCDPlayer()
+	    //start playing:
+	    processPlayPause()
+	    //pause CD player:
+		processPlayPause()
+		assert called CD.paused()
+		assert isPlaying == false
+	    //restart playing:
+		processPlayPause()
+		assert called CD.playing()
+		assert isPlaying == true
+	}
+		
+	@Test
+	operation testPlayStop() {
+	    activateCDPlayer()
+	    //start playing:
+		processPlayPause()
+		//stop playing:
+		processStop()
+		assert called CD.stopped()
+		assert isPlaying == false
+	}
+	
+	@Test
+	operation testPlayPauseStop() {
+	    activateCDPlayer()
+	    //start playing:
+	    processPlayPause()
+	    //pause CD player:
+		processPlayPause()
+		assert called CD.paused()
+		assert isPlaying == false
+	    //stop CD player:
+		processStop()
+		assert called CD.stopped()
+		assert isPlaying == false
+	}
+	
+	@Test
+	operation testTimeout() {
+		// set the timeout at a sufficiently small time period (in milliseconds)
+		// so that this test does not take too long to execute
+		timeout = 500
+		activateCDPlayer()
+		processPlayPause()
+		processPlayPause()
+		// do nothing and wait 1000 milliseconds (1 second)
+		proceed 1 s
+		// assert that the timed transition "after timeout ms" is indeed followed
+		assert called CD.turnOff()
+	}
+}
+

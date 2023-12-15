@@ -23,3 +23,7 @@ jobs:
       run: |
         cd CDPlayer
         mvn -B package
+
+    - name: Publish Test Report
+      if: ${{ always() }}
+      uses: scacap/action-surefire-report@v1

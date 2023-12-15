@@ -95,7 +95,7 @@ testclass WhiteboxCDPlayerTest for statechart CDPlayer {
 	operation testTimeout() {
 		// set the timeout at a sufficiently small time period (in milliseconds)
 		// so that this test does not take too long to execute
-		timeout = 500
+		CD.timeout = 500
 		activateCDPlayer()
 		raise CD.play
 		proceed 1 cycle

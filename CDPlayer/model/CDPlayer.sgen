@@ -1,8 +1,8 @@
 GeneratorModel for create::java {
 
-	const PROJECT : string = "CDPlayer"
+	const PROJECT : string = "MyCDPlayer"
 
-	const FOLDER : string = "src"
+	const FOLDER : string = "src/main/java"
 
 	statechart CDPlayer {
 
@@ -10,10 +10,12 @@ GeneratorModel for create::java {
 			targetProject = PROJECT
 			targetFolder = FOLDER
 		}
+		feature GeneralFeatures {
+    		TimerService = true
+		}
 		
 		feature Naming {
-    		basePackage = "CDPlayer"
-	    	typeName = "GeneratedStatechart"
+    	 basePackage = "umons"
 		}
 	}
 }

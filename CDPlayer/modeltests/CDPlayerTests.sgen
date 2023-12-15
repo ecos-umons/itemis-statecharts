@@ -1,8 +1,8 @@
 GeneratorModel for create::sctunit::java {
 
-	const PROJECT : string = "CDPlayer"
+	const PROJECT : string = "MyCDPlayer"
 
-	const FOLDER : string = "./"
+	const FOLDER : string = "test/java"
 
 	test BlackboxCDPlayerTest {
 
@@ -11,7 +11,7 @@ GeneratorModel for create::sctunit::java {
 			targetFolder = FOLDER
 		}
 		feature Naming {
-    		basePackage = "test"
+   		  basePackage = "umons"
 		}
 	}
 
@@ -20,10 +20,9 @@ GeneratorModel for create::sctunit::java {
 		feature Outlet {
 			targetProject = PROJECT
 			targetFolder = FOLDER
-		}
-		
+		}	
 		feature Naming {
-    		basePackage = "test"
+   		  basePackage = "umons"
 		}
 	}
 
@@ -34,7 +33,7 @@ GeneratorModel for create::sctunit::java {
 			targetFolder = FOLDER
 		}
 		feature Naming {
-    		basePackage = "test"
+    	  basePackage = "umons"
 		}
 	}
 
@@ -45,7 +44,7 @@ GeneratorModel for create::sctunit::java {
 			targetFolder = FOLDER
 		}
 		feature Naming {
-    		basePackage = "test"
+   		  basePackage = "umons"
 		}
 	}
 }

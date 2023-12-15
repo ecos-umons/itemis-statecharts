@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_trIjAHiXEeSBHI6RrNorfQ" specification="// Example created by Tom Mens&#xA;// University of Mons, Belgium&#xA;// December 2023&#xA;&#xA;@CycleBased(200)&#xA;&#xA;//interface for RemoteControl&#xA;interface:&#xA;&#xA;in event onOff&#xA;in event playPause&#xA;in event stop&#xA;&#xA;var isPlaying:boolean = false&#xA;var timeout:integer = 10000&#xA;&#xA;//interface for CDPlayer&#xA;interface CD:&#xA;&#xA;in event on&#xA;in event off&#xA;in event play&#xA;in event stop&#xA;in event pause&#xA;&#xA;operation turnOn():void&#xA;operation turnOff():void&#xA;operation playing():void&#xA;operation stopped():void&#xA;operation paused():void&#xA;" name="CDPlayer">
+  <sgraph:Statechart xmi:id="_trIjAHiXEeSBHI6RrNorfQ" specification="// Example created by Tom Mens&#xA;// University of Mons, Belgium&#xA;// December 2023&#xA;&#xA;@CycleBased(200)&#xA;&#xA;//interface for RemoteControl&#xA;interface RC:&#xA;&#xA;in event onOff&#xA;in event playPause&#xA;in event stop&#xA;&#xA;var isPlaying:boolean = false&#xA;&#xA;//interface for CDPlayer&#xA;interface CD:&#xA;&#xA;in event on&#xA;in event off&#xA;in event play&#xA;in event stop&#xA;in event pause&#xA;&#xA;operation turnOn():void&#xA;operation turnOff():void&#xA;operation playing():void&#xA;operation stopped():void&#xA;operation paused():void&#xA;&#xA;var timeout:integer = 10000&#xA;" name="CDPlayer">
     <regions xmi:id="_trJxIniXEeSBHI6RrNorfQ" name="RemoteControl">
       <vertices xsi:type="sgraph:Entry" xmi:id="_trOpoXiXEeSBHI6RrNorfQ">
         <outgoingTransitions xmi:id="_trRs8XiXEeSBHI6RrNorfQ" target="_trP3wXiXEeSBHI6RrNorfQ"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_trP3wXiXEeSBHI6RrNorfQ" name="Off" incomingTransitions="_trRs8XiXEeSBHI6RrNorfQ _gKd94HiYEeSBHI6RrNorfQ">
-        <outgoingTransitions xmi:id="_yJgy0HiXEeSBHI6RrNorfQ" specification="onOff&#xA;/ raise CD.on" target="_yJb6UHiXEeSBHI6RrNorfQ"/>
+        <outgoingTransitions xmi:id="_yJgy0HiXEeSBHI6RrNorfQ" specification="RC.onOff&#xA;/ raise CD.on" target="_yJb6UHiXEeSBHI6RrNorfQ"/>
       </vertices>
-      <vertices xsi:type="sgraph:State" xmi:id="_yJb6UHiXEeSBHI6RrNorfQ" specification="playPause [!isPlaying] / raise CD.play&#xA;playPause [isPlaying] / raise CD.pause&#xA;stop / raise CD.stop" name="On" incomingTransitions="_yJgy0HiXEeSBHI6RrNorfQ">
-        <outgoingTransitions xmi:id="_gKd94HiYEeSBHI6RrNorfQ" specification="onOff&#xA;/ raise CD.off" target="_trP3wXiXEeSBHI6RrNorfQ"/>
+      <vertices xsi:type="sgraph:State" xmi:id="_yJb6UHiXEeSBHI6RrNorfQ" specification="RC.playPause [!RC.isPlaying] / raise CD.play&#xA;RC.playPause [RC.isPlaying] / raise CD.pause&#xA;RC.stop / raise CD.stop" name="On" incomingTransitions="_yJgy0HiXEeSBHI6RrNorfQ">
+        <outgoingTransitions xmi:id="_gKd94HiYEeSBHI6RrNorfQ" specification="RC.onOff&#xA;/ raise CD.off" target="_trP3wXiXEeSBHI6RrNorfQ"/>
       </vertices>
     </regions>
     <regions xmi:id="_trWwAHiYEeSBHI6RrNorfQ" name="CDPlayer">
@@ -25,14 +25,14 @@
           <vertices xsi:type="sgraph:State" xmi:id="_sxX-kHiZEeSBHI6RrNorfQ" specification="entry / CD.stopped()" name="Stop" incomingTransitions="_YxEcgHiaEeSBHI6RrNorfQ _s9q4sHiaEeSBHI6RrNorfQ _qaNSQJm0Ee6f8dnj0fq5yQ">
             <outgoingTransitions xmi:id="_LnfXIHiaEeSBHI6RrNorfQ" specification="CD.play" target="_s_9NIHiZEeSBHI6RrNorfQ"/>
           </vertices>
-          <vertices xsi:type="sgraph:State" xmi:id="_s_9NIHiZEeSBHI6RrNorfQ" specification="entry / isPlaying = true; &#xA;            CD.playing()&#xA;exit / isPlaying = false" name="Play" incomingTransitions="_LnfXIHiaEeSBHI6RrNorfQ _fUOAcHiaEeSBHI6RrNorfQ">
+          <vertices xsi:type="sgraph:State" xmi:id="_s_9NIHiZEeSBHI6RrNorfQ" specification="entry / RC.isPlaying = true; &#xA;            CD.playing()&#xA;exit / RC.isPlaying = false" name="Play" incomingTransitions="_LnfXIHiaEeSBHI6RrNorfQ _fUOAcHiaEeSBHI6RrNorfQ">
             <outgoingTransitions xmi:id="_YxEcgHiaEeSBHI6RrNorfQ" specification="CD.stop" target="_sxX-kHiZEeSBHI6RrNorfQ"/>
             <outgoingTransitions xmi:id="_crOk8HiaEeSBHI6RrNorfQ" specification="CD.pause" target="_tQarAHiZEeSBHI6RrNorfQ"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_tQarAHiZEeSBHI6RrNorfQ" specification="entry / CD.paused()" name="Pause" incomingTransitions="_crOk8HiaEeSBHI6RrNorfQ">
-            <outgoingTransitions xmi:id="_fUOAcHiaEeSBHI6RrNorfQ" specification="CD.play" target="_s_9NIHiZEeSBHI6RrNorfQ"/>
             <outgoingTransitions xmi:id="_s9q4sHiaEeSBHI6RrNorfQ" specification="CD.stop" target="_sxX-kHiZEeSBHI6RrNorfQ"/>
-            <outgoingTransitions xmi:id="_HyrdkJm0Ee6f8dnj0fq5yQ" specification="after timeout ms" target="_LgMRwHiZEeSBHI6RrNorfQ"/>
+            <outgoingTransitions xmi:id="_fUOAcHiaEeSBHI6RrNorfQ" specification="CD.play" target="_s_9NIHiZEeSBHI6RrNorfQ"/>
+            <outgoingTransitions xmi:id="_HyrdkJm0Ee6f8dnj0fq5yQ" specification="after CD.timeout ms" target="_LgMRwHiZEeSBHI6RrNorfQ"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_Y4CcAJm0Ee6f8dnj0fq5yQ" incomingTransitions="_rFfD4Jm0Ee6f8dnj0fq5yQ" kind="SHALLOW_HISTORY">
             <outgoingTransitions xmi:id="_qaNSQJm0Ee6f8dnj0fq5yQ" specification="" target="_sxX-kHiZEeSBHI6RrNorfQ"/>
@@ -105,7 +105,7 @@
       <children xsi:type="notation:Shape" xmi:id="_trUJM3iXEeSBHI6RrNorfQ" type="StatechartTextExpression" fontName="Verdana" lineColor="4210752">
         <layoutConstraint xsi:type="notation:Bounds" xmi:id="_trUJNHiXEeSBHI6RrNorfQ"/>
       </children>
-      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_trUwQHiXEeSBHI6RrNorfQ" x="12" width="163" height="388"/>
+      <layoutConstraint xsi:type="notation:Bounds" xmi:id="_trUwQHiXEeSBHI6RrNorfQ" width="163" height="388"/>
     </children>
     <children xmi:id="_trX-IHiYEeSBHI6RrNorfQ" type="Region" element="_trWwAHiYEeSBHI6RrNorfQ">
       <children xsi:type="notation:DecorationNode" xmi:id="_trX-I3iYEeSBHI6RrNorfQ" type="RegionName">

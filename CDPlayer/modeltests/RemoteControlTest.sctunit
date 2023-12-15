@@ -16,10 +16,10 @@ testclass RemoteControlTest for statechart CDPlayer {
 	@Test
 	operation testOnOff() {
 		enter
-		raise onOff
+		raise RC.onOff
 		proceed 1 cycle
 		assert active(RemoteControl.On)
-		raise onOff
+		raise RC.onOff
 		proceed 1 cycle
 		assert active(RemoteControl.Off)
 	}
@@ -28,15 +28,15 @@ testclass RemoteControlTest for statechart CDPlayer {
 	@Test
 	operation testPlayPause() {
 		enter
-		raise onOff
+		raise RC.onOff
 		proceed 1 cycle
 		assert active(RemoteControl.On)
 		// raising the event playPause does not change the sate of the remoteControl
-		raise playPause
+		raise RC.playPause
 		proceed 1 cycle
 		assert active(RemoteControl.On)
 		// raising the event stop does not change the sate of the remoteControl
-		raise stop
+		raise RC.stop
 		proceed 1 cycle
 		assert active(RemoteControl.On)
 	}

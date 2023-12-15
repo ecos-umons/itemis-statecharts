@@ -11,7 +11,7 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 
 	operation processOnOff() {
 		// raise an event sent to the remote control (to turn on or off the CD player)
-	    raise onOff
+	    raise RC.onOff
 	    // process the event
 	    proceed 1 cycle
 		// and process the event that will be raised implicitly by the RemoteControl
@@ -20,7 +20,7 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 		
 	operation processPlayPause() {
 		// raise an event sent to the remote control (to play a CD or to put it in pause when it is already playing)
-	    raise playPause
+	    raise RC.playPause
 	    // process the event
 	    proceed 1 cycle
 		// and process the event that will be raised implicitly by the RemoteControl
@@ -29,7 +29,7 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 		
 	operation processStop() {
 		// raise an event sent to the remote control (to stop the CD player)
-		raise stop
+		raise RC.stop
 		proceed 1 cycle
 		proceed 1 cycle
 	}
@@ -65,11 +65,11 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 	@Test
 	operation testPlay() {
 		activateCDPlayer()
-		assert isPlaying == false
+		assert RC.isPlaying == false
 	    //start playing:
 		processPlayPause()
 		assert called CD.playing()
-		assert isPlaying == true
+		assert RC.isPlaying == true
 	}
 	
 	@Test
@@ -80,11 +80,11 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 	    //pause CD player:
 		processPlayPause()
 		assert called CD.paused()
-		assert isPlaying == false
+		assert RC.isPlaying == false
 	    //restart playing:
 		processPlayPause()
 		assert called CD.playing()
-		assert isPlaying == true
+		assert RC.isPlaying == true
 	}
 		
 	@Test
@@ -95,7 +95,7 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 		//stop playing:
 		processStop()
 		assert called CD.stopped()
-		assert isPlaying == false
+		assert RC.isPlaying == false
 	}
 	
 	@Test
@@ -106,18 +106,18 @@ testclass BlackboxCDPlayerTest for statechart CDPlayer {
 	    //pause CD player:
 		processPlayPause()
 		assert called CD.paused()
-		assert isPlaying == false
+		assert RC.isPlaying == false
 	    //stop CD player:
 		processStop()
 		assert called CD.stopped()
-		assert isPlaying == false
+		assert RC.isPlaying == false
 	}
 	
 	@Test
 	operation testTimeout() {
 		// set the timeout at a sufficiently small time period (in milliseconds)
 		// so that this test does not take too long to execute
-		timeout = 500
+		CD.timeout = 500
 		activateCDPlayer()
 		processPlayPause()
 		processPlayPause()

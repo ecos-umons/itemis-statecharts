@@ -16,7 +16,7 @@ Directory `CDPlayer` contains an example of a statechart controller for a CD Pla
 * V3.0: Addition of an integer variable timeout, change of the CDPlayer statechart to add a history state and a timeout transition, and refactoring of unit test suite to separate black-box tests from white-box tests.
 * V3.2: Addition of auto-generated Java code and JUnit tests, with Maven commands for compiling and running the tests. Addition of a Main.java file (to be run with "mvn exec:java) to illustrate how to call the generated statechart code.
 
-## Usage instrucions
+## Usage instructions
 To simulate the statechart model in the example, or execute its SCTUnit tests at model level, one needs to install the statechart tooling from https://www.itemis.com/en/products/itemis-create/
 To run the generated code and its generated JUnit tests, one can use maven:
 

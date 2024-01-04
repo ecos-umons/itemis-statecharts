@@ -1,4 +1,5 @@
 ![Maven Build](https://github.com/ecos-umons/itemis-statecharts/actions/workflows/maven.yml/badge.svg)
+![CodeQL](https://github.com/ecos-umons/TimerStopwatch/actions/workflows/codeql.yml/badge.svg)
 
 # CDPlayer statechart with auto-generated code and tests
 

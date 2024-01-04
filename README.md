@@ -20,8 +20,9 @@ Directory `CDPlayer` contains an example of a statechart controller for a CD Pla
 To simulate the statechart model in the example, or execute its SCTUnit tests at model level, one needs to install the statechart tooling from https://www.itemis.com/en/products/itemis-create/
 To run the generated code and its generated JUnit tests, one can use maven:
 
-* mvn package compiles all code, runs the unit tests, and packages the code
-* mvn exec:java allows to execute the generated code 
+* 'mvn compile' just compiles the code
+* 'mvn package' compiles all code, runs the unit tests, and packages the code
+* 'mvn exec:java' allows to execute the generated code 
 
 ## Acknowledgements
 
